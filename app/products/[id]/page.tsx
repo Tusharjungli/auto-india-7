@@ -1,14 +1,16 @@
-import { dummyProducts } from "@/lib/dummyProducts";
-import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface Params {
   params: { id: string };
 }
 
-export default function ProductDetail({ params }: Params) {
-  const product = dummyProducts.find((item) => item.id === params.id);
+export default async function ProductDetail({ params }: Params) {
+  const product = await prisma.product.findUnique({
+    where: { id: params.id },
+  });
 
   if (!product) return notFound();
 
