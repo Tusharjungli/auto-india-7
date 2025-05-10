@@ -13,6 +13,8 @@ model User {
   email     String   @unique
   password  String
   image     String?
+  orders Order[]
+
   createdAt DateTime @default(now())
 }
 
@@ -24,4 +26,31 @@ model Product {
   imageUrl    String
   stock       Int
   createdAt   DateTime @default(now())
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  userId     String?
+  user       User?       @relation(fields: [userId], references: [id])
+  name       String
+  email      String
+  phone      String
+  address    String
+  pincode    String
+  city       String
+  state      String
+  total      Int
+  items      OrderItem[]
+  createdAt  DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  name      String
+  price     Int
+  quantity  Int
+  imageUrl  String
 }

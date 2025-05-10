@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AddToCartButton from "@/components/AddToCartButton";
 
 interface Params {
   params: { id: string };
@@ -37,6 +38,7 @@ export default async function ProductDetail({ params }: Params) {
           <p className="text-gray-600 dark:text-gray-300">{product.description}</p>
           <p className="text-xl font-semibold text-black dark:text-white">₹ {product.price.toLocaleString()}</p>
           <p className="text-sm text-gray-500">Stock: {product.stock}</p>
+          <AddToCartButton product={product} />
         </div>
       </div>
     </main>
